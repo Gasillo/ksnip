@@ -63,7 +63,7 @@ void UshareUploader::upload(const QImage &image)
         }
         mConfig->setUshareAccessToken(text);
     }
-    if (!mConfig->ushareForceAnonymous() && !mConfig->ushareAccessToken().isEmpty()) {
+    if (!mConfig->ushareAccessToken().isEmpty()) {
         mUshareWrapper->startUpload(mImage, mConfig->ushareAccessToken());
     } else {
         mUshareWrapper->startUpload(mImage);

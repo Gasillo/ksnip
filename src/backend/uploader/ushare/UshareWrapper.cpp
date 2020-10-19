@@ -51,8 +51,8 @@ void UshareWrapper::startUpload(const QImage& image, const QByteArray& accessTok
     QUrlQuery urlQuery;
 
     // Add params that we send with the picture
-    urlQuery.addQueryItem(QStringLiteral("title"), QStringLiteral("Ksnip Screenshot"));
-    urlQuery.addQueryItem(QStringLiteral("description"), QStringLiteral("Screenshot uploaded via Ksnip"));
+    // urlQuery.addQueryItem(QStringLiteral("title"), QStringLiteral("Ksnip Screenshot"));
+    // urlQuery.addQueryItem(QStringLiteral("description"), QStringLiteral("Screenshot uploaded via Ksnip"));
 
     url.setQuery(urlQuery);
     QNetworkRequest request;
@@ -63,8 +63,10 @@ void UshareWrapper::startUpload(const QImage& image, const QByteArray& accessTok
     // anonymously
     if (accessToken.isEmpty()) {
         request.setRawHeader("Authorization", "Client-ID " + mClientId);
+        qDebug() << "Authorization: Client-ID " << mClientId;
     } else {
         request.setRawHeader("Authorization", "Bearer " + accessToken);
+        qDebug() << "Authorization: Bearer " << accessToken;
     }
 
     // Post the image
