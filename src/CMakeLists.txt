@@ -161,6 +161,8 @@ set(KSNIP_SRCS ${KSNIP_SRCS} PARENT_SCOPE)
 if (WIN32)
 	add_executable(ksnip ${KSNIP_SRCS} ${CMAKE_SOURCE_DIR}/icons/ksnip_icons.qrc ${CMAKE_SOURCE_DIR}/icons/ksnip_windows_icon.rc)
 elseif (APPLE)
+    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+
 	set(MACOSX_BUNDLE_EXECUTABLE_NAME "ksnip")
 	set(MACOSX_BUNDLE_GUI_IDENTIFIER "org.ksnip.ksnip")
 	set(MACOSX_BUNDLE_ICON_FILE "ksnip.icns")
@@ -177,22 +179,22 @@ else()
 endif ()
 
 target_link_libraries(ksnip
-					  Qt5::Widgets
+                                          Qt5::Widgets
 					  Qt5::Network
 					  Qt5::Xml
 					  Qt5::PrintSupport
 					  Qt5::DBus
-					  kImageAnnotator
-					  kColorPicker
+                      kImageAnnotator
+                      kColorPicker
 					  Qt5::Svg
 					  )
 
 if (APPLE)
 	target_link_libraries(ksnip "-framework CoreGraphics -framework AppKit")
 elseif (UNIX)
-	target_link_libraries(ksnip
+        target_link_libraries(ksnip
             Qt5::X11Extras
-			XCB::XFIXES
+            XCB::XFIXES
             X11
             )
 elseif(WIN32)
