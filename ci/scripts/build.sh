@@ -21,8 +21,8 @@ elif [[ "${BINARY_TYPE}" == "exe" ]]; then
     windeployqt.exe packageDir/ksnip.exe
     cp build/translations/ksnip_*.qm ./packageDir/translations/
     cp kImageAnnotator/build/translations/kImageAnnotator_*.qm ./packageDir/translations/
-	cp /c/openssl/libeay32.dll ./packageDir/
-	cp /c/openssl/ssleay32.dll ./packageDir/
+    cp /c/openssl/openssl-1.0.2o-x32-VC2017/libeay32.dll ./packageDir/
+    cp /c/openssl/openssl-1.0.2o-x32-VC2017/ssleay32.dll ./packageDir/
 	
     7z a ksnip-${VERSION}-windows.zip ./packageDir/*
 elif [[ "${BINARY_TYPE}" == "app" ]]; then
