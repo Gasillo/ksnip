@@ -45,30 +45,37 @@ QRect HdpiScaler::scale(const QRect &rect) const
 	};
 }
 
+//qreal HdpiScaler::scaleFactorOld() const
+//{
+//	auto desktopWidget = QApplication::desktop();
+
+//#if defined(__APPLE__)
+//    auto myWindow = QGuiApplication::topLevelWindows().first();
+//    qDebug("QWindow devicePixelRatio: %s", qPrintable(QString::number(myWindow->devicePixelRatio())));
+
+//	NSRect frame = NSMakeRect(0, 0, 200, 200);
+//	NSWindow* window  = [[[NSWindow alloc] initWithContentRect:frame
+//	styleMask:NSWindowStyleMaskBorderless
+//	backing:NSBackingStoreBuffered
+//	defer:NO] autorelease];
+//	[window makeKeyAndOrderFront:NSApp];
+//	NSSize backingSize = [window.contentView convertSizeToBacking:NSMakeSize(1.0, 1.0)];
+
+//	qDebug("view backingSize: w %s, h %s", qPrintable(QString::number(backingSize.width)), qPrintable(QString::number(backingSize.height)));
+//	qDebug("screen backingScaleFactor: %s", qPrintable(QString::number([[NSScreen mainScreen] backingScaleFactor])));
+
+//	return [[NSScreen mainScreen] backingScaleFactor];
+
+//#endif
+
+//#if defined(__linux__) || defined(_WIN32)
+//	return desktopWidget->devicePixelRatioF();
+//#endif
+//}
+
+
 qreal HdpiScaler::scaleFactor() const
 {
 	auto desktopWidget = QApplication::desktop();
-	
-#if defined(__APPLE__)
-    auto myWindow = QGuiApplication::topLevelWindows().first();
-    qDebug("QWindow devicePixelRatio: %s", qPrintable(QString::number(myWindow->devicePixelRatio())));
-
-	NSRect frame = NSMakeRect(0, 0, 200, 200);
-	NSWindow* window  = [[[NSWindow alloc] initWithContentRect:frame
-	styleMask:NSWindowStyleMaskBorderless
-	backing:NSBackingStoreBuffered
-	defer:NO] autorelease];
-	[window makeKeyAndOrderFront:NSApp];
-	NSSize backingSize = [window.contentView convertSizeToBacking:NSMakeSize(1.0, 1.0)];
-
-	qDebug("view backingSize: w %s, h %s", qPrintable(QString::number(backingSize.width)), qPrintable(QString::number(backingSize.height)));
-	qDebug("screen backingScaleFactor: %s", qPrintable(QString::number([[NSScreen mainScreen] backingScaleFactor])));
-
-	return [[NSScreen mainScreen] backingScaleFactor];
-
-#endif
-	
-#if defined(__linux__) || defined(_WIN32)
 	return desktopWidget->devicePixelRatioF();
-#endif
 }

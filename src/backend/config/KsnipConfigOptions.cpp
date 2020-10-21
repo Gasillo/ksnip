@@ -307,52 +307,52 @@ QString KsnipConfigOptions::uploadScriptCopyOutputFilterString()
 
 QString KsnipConfigOptions::ushareUsernameString()
 {
-    return imgurSectionString() + QLatin1Literal("Username");
+    return ushareSectionString() + QLatin1Literal("Username");
 }
 
 QString KsnipConfigOptions::ushareClientIdString()
 {
-    return imgurSectionString() + QLatin1Literal("ClientId");
+    return ushareSectionString() + QLatin1Literal("ClientId");
 }
 
 QString KsnipConfigOptions::ushareClientSecretString()
 {
-    return imgurSectionString() + QLatin1Literal("ClientSecret");
+    return ushareSectionString() + QLatin1Literal("ClientSecret");
 }
 
 QString KsnipConfigOptions::ushareAccessTokenString()
 {
-    return imgurSectionString() + QLatin1Literal("AccessToken");
+    return ushareSectionString() + QLatin1Literal("AccessToken");
 }
 
 QString KsnipConfigOptions::ushareRefreshTokenString()
 {
-    return imgurSectionString() + QLatin1Literal("RefreshToken");
+    return ushareSectionString() + QLatin1Literal("RefreshToken");
 }
 
 QString KsnipConfigOptions::ushareForceAnonymousString()
 {
-    return imgurSectionString() + QLatin1Literal("ForceAnonymous");
+    return ushareSectionString() + QLatin1Literal("ForceAnonymous");
 }
 
 QString KsnipConfigOptions::ushareLinkDirectlyToImageString()
 {
-    return imgurSectionString() + QLatin1Literal("OpenLinkDirectlyToImage");
+    return ushareSectionString() + QLatin1Literal("OpenLinkDirectlyToImage");
 }
 
 QString KsnipConfigOptions::ushareOpenLinkInBrowserString()
 {
-    return imgurSectionString() + QLatin1Literal("OpenLinkInBrowser");
+    return ushareSectionString() + QLatin1Literal("OpenLinkInBrowser");
 }
 
 QString KsnipConfigOptions::ushareAlwaysCopyToClipboardString()
 {
-    return imgurSectionString() + QLatin1Literal("AlwaysCopyToClipboard");
+    return ushareSectionString() + QLatin1Literal("AlwaysCopyToClipboard");
 }
 
 QString KsnipConfigOptions::ushareBaseUrlString()
 {
-    return imgurSectionString() + QLatin1Literal("BaseUrl");
+    return ushareSectionString() + QLatin1Literal("BaseUrl");
 }
 
 

@@ -44,7 +44,8 @@ private:
 	QClipboard *mClipboard;
 
 	void notifyImgurSuccessfulUpload(const QString &url) const;
-	void handleImgurResult();
+    void handleUshareResult();
+    void handleImgurResult();
 	void handleScriptResult();
 	void copyToClipboard(const QString &url) const;
 	void OpenUrl(const QString &url) const;

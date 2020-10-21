@@ -33,12 +33,33 @@ bool HandleUploadResultOperation::execute()
 		case UploaderType::Imgur:
 			handleImgurResult();
 			break;
+        case UploaderType::Ushare:
+            handleUshareResult();
+           break;
+
 		case UploaderType::Script:
 			handleScriptResult();
 			break;
 	}
 
 	return mUploadResult.status == UploadStatus::NoError;
+}
+
+void HandleUploadResultOperation::handleUshareResult()
+{
+    if(mUploadResult.status == UploadStatus::NoError) {
+        if (mConfig->ushareOpenLinkInBrowser()) {
+            OpenUrl(mUploadResult.content);
+        }
+
+        if (mConfig->ushareAlwaysCopyToClipboard()) {
+            copyToClipboard(mUploadResult.content);
+        }
+
+        notifyImgurSuccessfulUpload(mUploadResult.content);
+    } else {
+        handleUploadError();
+    }
 }
 
 void HandleUploadResultOperation::handleImgurResult()

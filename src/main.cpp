@@ -26,6 +26,8 @@
 
 #include "BuildConfig.h"
 #include "src/bootstrapper/BootstrapperFactory.h"
+#include "src/backend/config/KsnipConfigProvider.h"
+
 
 int main(int argc, char** argv)
 {
@@ -39,7 +41,20 @@ int main(int argc, char** argv)
     app.setDesktopFileName(QStringLiteral("org.ksnip.ksnip.desktop"));
 
     app.setStyle(KsnipConfigProvider::instance()->applicationStyle());
+    KsnipConfig* mConfig = KsnipConfigProvider::instance();
+    UploaderType oldValue = mConfig->uploaderType();
+    auto restoreOldUploader = false;
+    if (oldValue != UploaderType::Ushare)
+    {
+        mConfig->setUploaderType(UploaderType::Ushare);
+        restoreOldUploader = true;
+    }
+    mConfig->setUshareAlwaysCopyToClipboard(true);
+    mConfig->setUshareOpenLinkInBrowser(true);
 
 	BootstrapperFactory bootstrapperFactory;
-	return bootstrapperFactory.create()->start(app);
+    int retValue =  bootstrapperFactory.create()->start(app);
+    if (restoreOldUploader)
+        mConfig->setUploaderType(oldValue);
+    return retValue;
 }
