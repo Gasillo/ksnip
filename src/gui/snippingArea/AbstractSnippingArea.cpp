@@ -117,6 +117,7 @@ QPixmap AbstractSnippingArea::background() const
 
 bool AbstractSnippingArea::closeSnippingArea()
 {
+    QWidget::showNormal(); // osx fix
     releaseKeyboard(); // Issue #57
     return QWidget::close();
 }
