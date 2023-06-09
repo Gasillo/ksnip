@@ -28,6 +28,8 @@
 #include "src/backend/uploader/UploadResult.h"
 #include "src/backend/config/KsnipConfigProvider.h"
 #include "src/common/constants/DefaultValues.h"
+#include "src/gui/CustomInputDialog.h"
+
 
 class UshareUploader : public QObject, public IUploader
 {

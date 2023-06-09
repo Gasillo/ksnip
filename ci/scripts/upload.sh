@@ -13,13 +13,13 @@ fi
 
 if [[ "${BINARY_TYPE}" == "AppImage" ]]; then
     find appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
-    bash upload.sh ksnip*.AppImage*
+    bash upload.sh Phonexa*.AppImage*
 elif [[ "${BINARY_TYPE}" == "deb" ]]; then
-    bash upload.sh ksnip-*.deb
+    bash upload.sh phonexa-*.deb
 elif [[ "${BINARY_TYPE}" == "rpm" ]]; then
-    bash upload.sh ksnip-*.rpm
+    bash upload.sh phonexa-*.rpm
 elif [[ "${BINARY_TYPE}" == "exe" ]]; then
-    bash upload.sh ksnip-*.zip
+    bash upload.sh phonexa-*.zip
 elif [[ "${BINARY_TYPE}" == "app" ]]; then
-    bash upload.sh ksnip-*.dmg
+    bash upload.sh phonexa-*.dmg
 fi

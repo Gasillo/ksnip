@@ -15,9 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
- */
+ */  
 
-#if  defined(_WIN32) && defined(QT_NO_DEBUG)
+#if  defined(_WIN32)  && defined(QT_NO_DEBUG)
 // Prevent starting console in background under windows
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 #endif
@@ -28,22 +28,63 @@
 #include "src/bootstrapper/BootstrapperFactory.h"
 #include "src/backend/config/KsnipConfigProvider.h"
 
+#include <QKeyEvent>
+#include <QHideEvent>
+#include <QActionEvent>
+
+
+class Application final : public QApplication
+{
+public:
+    Application(int &argc, char **argv) : QApplication(argc, argv) {}
+    virtual bool notify(QObject *receiver, QEvent *event) override
+    {
+        //qDebug() << __FUNCTION__ << Qt::endl <<  event;
+        auto event_type = event->type();
+        if (event_type == QEvent::ApplicationActivate)
+        {
+            auto windows = topLevelWindows();
+            auto widgets = topLevelWidgets();
+            foreach(auto item, windows)
+            {
+                MainWindow* wnd = dynamic_cast<MainWindow*>(item);
+                if (wnd)
+                {
+                    wnd->showNormal();
+                    break;
+                }
+            }
+            foreach(auto w, widgets)
+            {
+                MainWindow* wnd = dynamic_cast<MainWindow*>(w);
+                if (wnd)
+                    wnd->showNormal();
+            }
+
+        }
+        return QApplication::notify(receiver,event);
+    }
+};
+
 
 int main(int argc, char** argv)
 {
-    QApplication app(argc, argv);
+    //QApplication app(argc, argv);
+    Application app(argc, argv);
+
     app.setAttribute(Qt::AA_UseHighDpiPixmaps);
-    qDebug() << app.applicationDirPath() << " " << app.applicationFilePath();
-    app.setOrganizationName(QStringLiteral("ksnip"));
-    app.setOrganizationDomain(QStringLiteral("ksnip.ksnip.org"));
-    app.setApplicationName(QStringLiteral("ksnip"));
+    app.setOrganizationName(QStringLiteral("Phonexa"));
+    app.setOrganizationDomain(QStringLiteral("phonexa.com"));
+    app.setApplicationName(QStringLiteral("Phonexa Screenshoter"));
     app.setApplicationVersion(QStringLiteral(KSNIP_VERSION));
-    app.setDesktopFileName(QStringLiteral("org.ksnip.ksnip.desktop"));
+    app.setDesktopFileName(QStringLiteral("com.phonexa.desktop"));
+
 
     app.setStyle(KsnipConfigProvider::instance()->applicationStyle());
     KsnipConfig* mConfig = KsnipConfigProvider::instance();
     UploaderType oldValue = mConfig->uploaderType();
     auto restoreOldUploader = false;
+
     if (oldValue != UploaderType::Ushare)
     {
         mConfig->setUploaderType(UploaderType::Ushare);

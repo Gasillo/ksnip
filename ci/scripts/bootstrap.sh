@@ -15,6 +15,14 @@ elif [[ "${BINARY_TYPE}" == "rpm" ]]; then
 elif [[ "${BINARY_TYPE}" == "exe" ]]; then
     source ci/scripts/exe/bootstrap_envvars.sh
 
+    #echo "--> Download innosetup environment"
+
+    #wget --quiet -O innosetup.exe "https://mlaan2.home.xs4all.nl/ispack/innosetup-6.1.2.exe"
+    
+    #ecno "--> Install innosetup" 
+
+    #innosetup.exe "/SP- /VERYSILENT /CURRENTUSER /NOICONS /TYPE=compact /SUPPRESSMSGBOXES /LANG=english"
+
     echo "--> Download Dependencies"
 
     QT_BASE_URL="https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/qt5_599/qt.qt5.599.win32_msvc2015/5.9.9-0-201912101223"

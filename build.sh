@@ -1,4 +1,4 @@
-export BINARY_TYPE=deb
+export BINARY_TYPE=app
 export TRAVIS_COMPILER=gcc
 export CXX=${CXX:-g++}
 export CXX_FOR_BUILD=${CXX_FOR_BUILD:-g++}

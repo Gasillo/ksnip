@@ -30,6 +30,9 @@ UshareWrapper::UshareWrapper(const QString &UshareUrl, QObject *parent) :
 
     // Client ID that will only be used for anonymous upload
     mClientId = "16d41e28a3ba71e";
+    QStringList ssl;
+    ssl << "sslLibraryBuildVersionString="  << QSslSocket::sslLibraryBuildVersionString();
+    qDebug() <<  ssl;
 }
 
 /*
@@ -207,6 +210,7 @@ void UshareWrapper::handleReply(QNetworkReply* reply)
     // Check network return code, if we get no error or if we get a status 202,
     // proceed, the 202 is returned for invalid token, we will request a new
     // token.
+    qDebug() << reply->errorString() << QSslSocket::sslLibraryBuildVersionString();
     if (reply->error() != QNetworkReply::NoError &&
             reply->error() != QNetworkReply::ContentOperationNotPermittedError) {
         emit error(QStringLiteral("Network Error(") + QString::number(reply->error()) + "): " + reply->errorString());

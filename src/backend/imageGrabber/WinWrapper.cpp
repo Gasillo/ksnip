@@ -46,7 +46,6 @@ CursorDto WinWrapper::getCursorWithPosition() const
 	GetCursorInfo(&cursorInfo);
 	auto cursorPosition = getCursorPosition(QRect(), cursorInfo);
 	auto cursorPixmap = getCursorPixmap(cursorInfo);
-
 	return {cursorPixmap, cursorPosition};
 }
 

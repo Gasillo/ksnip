@@ -10,10 +10,10 @@ set(KSNIP_SRCS
 	${CMAKE_SOURCE_DIR}/src/backend/uploader/imgur/ImgurResponse.cpp
 	${CMAKE_SOURCE_DIR}/src/backend/uploader/imgur/ImgurUploader.cpp
 	${CMAKE_SOURCE_DIR}/src/backend/uploader/imgur/ImgurResponseLogger.cpp
-    ${CMAKE_SOURCE_DIR}/src/backend/uploader/ushare/UshareWrapper.cpp
-    ${CMAKE_SOURCE_DIR}/src/backend/uploader/ushare/UshareResponse.cpp
-    ${CMAKE_SOURCE_DIR}/src/backend/uploader/ushare/UshareUploader.cpp
-    ${CMAKE_SOURCE_DIR}/src/backend/uploader/ushare/UshareResponseLogger.cpp
+        ${CMAKE_SOURCE_DIR}/src/backend/uploader/ushare/UshareWrapper.cpp
+        ${CMAKE_SOURCE_DIR}/src/backend/uploader/ushare/UshareResponse.cpp
+        ${CMAKE_SOURCE_DIR}/src/backend/uploader/ushare/UshareUploader.cpp
+        ${CMAKE_SOURCE_DIR}/src/backend/uploader/ushare/UshareResponseLogger.cpp
 	${CMAKE_SOURCE_DIR}/src/backend/uploader/script/ScriptUploader.cpp
 	${CMAKE_SOURCE_DIR}/src/backend/uploader/UploaderProvider.cpp
 	${CMAKE_SOURCE_DIR}/src/backend/saver/SavePathProvider.cpp
@@ -49,11 +49,11 @@ set(KSNIP_SRCS
 	${CMAKE_SOURCE_DIR}/src/widgets/MainToolBar.cpp
 	${CMAKE_SOURCE_DIR}/src/widgets/KeySequenceLineEdit.cpp
 	${CMAKE_SOURCE_DIR}/src/widgets/CustomLineEdit.cpp
-    ${CMAKE_SOURCE_DIR}/src/gui/CustomInputDialog.cpp
-    ${CMAKE_SOURCE_DIR}/src/gui/MainWindow.cpp
+        ${CMAKE_SOURCE_DIR}/src/gui/CustomInputDialog.cpp
+        ${CMAKE_SOURCE_DIR}/src/gui/MainWindow.cpp
 	${CMAKE_SOURCE_DIR}/src/gui/ImgurHistoryDialog.cpp
-    ${CMAKE_SOURCE_DIR}/src/gui/UshareHistoryDialog.cpp
-    ${CMAKE_SOURCE_DIR}/src/gui/TrayIcon.cpp
+        ${CMAKE_SOURCE_DIR}/src/gui/UshareHistoryDialog.cpp
+        ${CMAKE_SOURCE_DIR}/src/gui/TrayIcon.cpp
 	${CMAKE_SOURCE_DIR}/src/gui/clipboard/ClipboardAdapter.cpp
 	${CMAKE_SOURCE_DIR}/src/gui/clipboard/IClipboard.h
 	${CMAKE_SOURCE_DIR}/src/gui/imageAnnotator/KImageAnnotatorAdapter.cpp
@@ -73,7 +73,7 @@ set(KSNIP_SRCS
 	${CMAKE_SOURCE_DIR}/src/gui/settingsDialog/ImageGrabberSettings.cpp
 	${CMAKE_SOURCE_DIR}/src/gui/settingsDialog/ImgurUploaderSettings.cpp
 	${CMAKE_SOURCE_DIR}/src/gui/settingsDialog/ScriptUploaderSettings.cpp
-    ${CMAKE_SOURCE_DIR}/src/gui/settingsDialog/UshareUploaderSettings.cpp
+        ${CMAKE_SOURCE_DIR}/src/gui/settingsDialog/UshareUploaderSettings.cpp
 	${CMAKE_SOURCE_DIR}/src/gui/settingsDialog/HotKeySettings.cpp
 	${CMAKE_SOURCE_DIR}/src/gui/settingsDialog/UploaderSettings.cpp
 	${CMAKE_SOURCE_DIR}/src/gui/settingsDialog/SaverSettings.cpp
@@ -159,26 +159,27 @@ endif ()
 set(KSNIP_SRCS ${KSNIP_SRCS} PARENT_SCOPE)
 
 if (WIN32)
-	add_executable(ksnip ${KSNIP_SRCS} ${CMAKE_SOURCE_DIR}/icons/ksnip_icons.qrc ${CMAKE_SOURCE_DIR}/icons/ksnip_windows_icon.rc)
+        add_executable(${KSNIP_EXECUTABLE} ${KSNIP_SRCS} ${CMAKE_SOURCE_DIR}/icons/ksnip_icons.qrc ${CMAKE_SOURCE_DIR}/icons/ksnip_windows_icon.rc)
 elseif (APPLE)
     set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
-	set(MACOSX_BUNDLE_EXECUTABLE_NAME "ksnip")
-	set(MACOSX_BUNDLE_GUI_IDENTIFIER "org.ksnip.ksnip")
-	set(MACOSX_BUNDLE_ICON_FILE "ksnip.icns")
+        set(MACOSX_BUNDLE_EXECUTABLE_NAME "${KSNIP_EXECUTABLE}")
+        set(MACOSX_BUNDLE_GUI_IDENTIFIER "org.phonexa.${KSNIP_EXECUTABLE}")
+    set(MACOSX_BUNDLE_ICON_FILE "ksnip.icns")
 	set(MACOSX_BUNDLE_INFO_STRING "Cross-Platform Screenshot and Annotation Tool")
-	set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${VERSION})
+    set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${KSNIP_VERSION})
 	set(MACOSX_BUNDLE_LONG_VERSION_STRING ${KSNIP_VERSION})
 
 	set(MACOSX_ICON ${CMAKE_SOURCE_DIR}/icons/ksnip.icns backend/imageGrabber/AbstractImageGrabber.cpp backend/imageGrabber/AbstractImageGrabber.h)
-	set_source_files_properties(${MACOSX_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+        set_source_files_properties(${MACOSX_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
-	add_executable(ksnip MACOSX_BUNDLE ${KSNIP_SRCS} ${CMAKE_SOURCE_DIR}/icons/ksnip_icons.qrc ${MACOSX_ICON})
+        add_executable(${KSNIP_EXECUTABLE} MACOSX_BUNDLE ${KSNIP_SRCS} ${CMAKE_SOURCE_DIR}/icons/ksnip_icons.qrc ${MACOSX_ICON})
 else()
-	add_executable(ksnip ${KSNIP_SRCS} ${CMAKE_SOURCE_DIR}/icons/ksnip_icons.qrc)
+        add_executable(${KSNIP_EXECUTABLE} ${KSNIP_SRCS} ${CMAKE_SOURCE_DIR}/icons/ksnip_icons.qrc)
 endif ()
 
-target_link_libraries(ksnip
+if (UNIX AND NOT APPLE)
+target_link_libraries(${KSNIP_EXECUTABLE}
                                           Qt5::Widgets
 					  Qt5::Network
 					  Qt5::Xml
@@ -188,24 +189,42 @@ target_link_libraries(ksnip
                       kColorPicker
 					  Qt5::Svg
 					  )
+elseif(WIN32 OR APPLE)
+    target_link_libraries(${KSNIP_EXECUTABLE}
+        Qt5::Widgets
+        Qt5::Network
+        Qt5::Xml
+        Qt5::PrintSupport
+        Qt5::DBus
+#        kImageAnnotator
+#        kColorPicker
+        Qt5::Svg
+       )
+endif()
 
 if (APPLE)
-	target_link_libraries(ksnip "-framework CoreGraphics -framework AppKit")
+        target_link_libraries(${KSNIP_EXECUTABLE} ${LIBS})
+
+        target_link_libraries(${KSNIP_EXECUTABLE} "-framework CoreGraphics -framework AppKit")
 elseif (UNIX)
-        target_link_libraries(ksnip
+#       target_link_libraries(ksnip ${LIBS})
+
+        target_link_libraries(${KSNIP_EXECUTABLE}
             Qt5::X11Extras
             XCB::XFIXES
             X11
             )
 elseif(WIN32)
-	target_link_libraries(ksnip
+        target_link_libraries(${KSNIP_EXECUTABLE} ${LIBS})
+
+        target_link_libraries(${KSNIP_EXECUTABLE}
             Qt5::WinExtras
             Dwmapi
 			)
 endif ()
 
 if (UNIX AND NOT APPLE)
-	install(TARGETS ksnip RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+        install(TARGETS ${KSNIP_EXECUTABLE} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
     # uninstall target
     if(NOT TARGET uninstall)

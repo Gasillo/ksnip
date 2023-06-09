@@ -22,7 +22,6 @@
 #include <QApplication>
 #include <QDesktopServices>
 #include <QMessageBox>
-#include "gui/CustomInputDialog.h"
 
 UshareUploader::UshareUploader() :
 	mConfig(KsnipConfigProvider::instance()),
@@ -77,8 +76,8 @@ void UshareUploader::UshareUploadFinished(const UshareResponse &response)
 
 	auto url = formatResponseUrl(response);
 
-	emit finished(UploadResult(UploadStatus::NoError, type(), url));
-    QDesktopServices::openUrl(url);
+    emit finished(UploadResult(UploadStatus::NoError, type(), url));
+    //QDesktopServices::openUrl(url);
     qInfo("%s %s", qPrintable(tr("Try to open url - ")), qPrintable(url));
 
 }
@@ -95,8 +94,8 @@ void UshareUploader::UshareError(const QString &message)
 {
     qCritical("MainWindow: Ushare uploader returned error: '%s'", qPrintable(message));
     auto ok = false;
-    ok = QMessageBox::warning(QApplication::activeWindow(), "Error", message);
-	emit finished(UploadResult(UploadStatus::NoError, type(), message));
+    //ok = QMessageBox::warning(QApplication::activeWindow(), "Error", message);
+    emit finished(UploadResult(UploadStatus::WebError, type(), message));
 }
 
 void UshareUploader::UshareTokenUpdated(const QString &accessToken, const QString &refreshToken, const QString &username)

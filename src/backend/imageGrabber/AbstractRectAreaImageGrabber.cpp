@@ -108,12 +108,13 @@ QPixmap AbstractRectAreaImageGrabber::getScreenshot() const
 	if (isRectAreaCaptureWithBackground()) {
 		return snippingAreaBackground().copy(mCaptureRect);
 	} else {
-		return getScreenshotFromRect(mCaptureRect);
+        return getScreenshotFromRect(mCaptureRect);
 	}
 }
 
 void AbstractRectAreaImageGrabber::setCaptureRectFromCorrectSource()
 {
+
 	switch (captureMode()) {
 		case CaptureModes::RectArea:
 			mCaptureRect = selectedSnippingAreaRect();
@@ -177,10 +178,11 @@ bool AbstractRectAreaImageGrabber::shouldCaptureCursor() const
 }
 
 void AbstractRectAreaImageGrabber::openSnippingArea()
-{
+{    
 	if (isSnippingAreaBackgroundTransparent()) {
 		openSnippingAreaWithoutBackground();
 	} else {
+
 		auto screenRect = fullScreenRect();
 		auto background = getScreenshotFromRect(screenRect);
 		mStoredCursorImageWithPosition = getCursorWithPosition();
