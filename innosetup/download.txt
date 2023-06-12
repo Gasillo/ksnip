@@ -1,0 +1,2 @@
+download  and install - 
+wget https://mlaan2.home.xs4all.nl/ispack/innosetup-6.1.2.exe

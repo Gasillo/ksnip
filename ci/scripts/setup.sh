@@ -16,8 +16,8 @@ else
     export VERSION=${VERSION_NUMBER}
 fi
 
-git clone git://github.com/DamirPorobic/kColorPicker
-git clone git://github.com/DamirPorobic/kImageAnnotator
+git clone git@github.com:ksnip/kColorPicker.git
+git clone git@github.com:ksnip/kImageAnnotator.git
 
 if [[ "${BINARY_TYPE}" == "AppImage" ]]; then
     source ci/scripts/common/setup_ubuntu_qt.sh
